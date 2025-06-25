@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Video Summarizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #fff;
+        }
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            width: 500px;
+            max-width: 90%;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            margin-bottom: 50px; /* Space for footer */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #6a5acd;
+            margin-bottom: 10px;
+        }
+        p.description {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 72, 255, 0.6);
+        }
+        button {
+            padding: 15px;
+            background: #4caf50;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 80%;
+            max-width: 400px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        button:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        button:active {
+            background: #388e3c;
+        }
+        .output, .error {
+            margin-top: 25px;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            transition: opacity 0.3s ease;
+        }
+        .output {
+            background: #e8f5e9;
+            border: 1px solid #b9f6ca;
+            color: #388e3c;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .output h2 {
+            font-size: 1.5rem;
+            color: #2c6b2f;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .output p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+            padding: 8px 0;
+        }
+        .error {
+            background: #ffebee;
+            border: 1px solid #ffccd5;
+            color: #d32f2f;
+            text-align: center;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+        .loader.show {
+            display: block;
+        }
+        .footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎥 YouTube Video Summarizer</h1>
+        <p class="description">Enter a YouTube video URL to get a quick summary of the content.</p>
+        
+        <form method="post" onsubmit="document.getElementById('loader').classList.add('show')">
+            <input type="text" name="video_url" placeholder="e.g. https://www.youtube.com/watch?v=..." required>
+            <button type="submit">Summarize Video</button>
+        </form>
+
+        <div id="loader" class="loader">⏳ Generating summary, please wait...</div>
+
+        {% if summary %}
+            <div class="output">
+                <h2>📝 Summary:</h2>
+                <p>{{ summary }}</p>
+            </div>
+        {% elif error %}
+            <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 YouTube Video Summarizer | All Rights Reserved</p>
+    </div>
+</body>
+</html>
